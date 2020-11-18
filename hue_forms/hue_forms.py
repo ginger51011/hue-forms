@@ -5,7 +5,7 @@ import requests as req
 import configparser
 from os import path
 from time import sleep
-from json import load
+from json import load, loads
 
 # Internal imports
 import hue_forms.sheets_checker as sc
@@ -17,7 +17,7 @@ CONFIG.read(path.join(path.expanduser("~"), "./.config/hue-forms/config.ini")) #
 # For hue
 USERNAME = CONFIG["hue"]["username"]
 BRIDGE_IP = CONFIG["hue"]["bridge_ip"]
-BASE_API_URL = f"http://{BRIDGE_IP}/api/{USERNAME}/"
+BASE_API_URL = f"http://{BRIDGE_IP}/api/{USERNAME}/lights/"
 
 # For Google Spreadsheets
 SHEET_ID = CONFIG["sheets"]["sheet_id"]
@@ -34,7 +34,7 @@ def update_lights(body, lamp_ids=[]):
     in a PUT.
     """
     for id in lamp_ids:
-        api_url = BASE_API_URL + id +"/state"
+        api_url = f"{BASE_API_URL}{id}/state"
         req.put(url=api_url, json=body)
 
 def get_all_color_lamps() -> list:
@@ -42,17 +42,15 @@ def get_all_color_lamps() -> list:
     Returns a list of all lamps with color
     capabilities
     """
-    
-    color_lamps = []
+    lamps = []
 
-    api_url = BASE_API_URL + "lights/"
-    response = req.get(url=api_url)
+    api_url = BASE_API_URL
+    response_content = loads(req.get(url=api_url).content)
 
-    for id in response:
-        if response[id]["colormode"] == "xy":
-            color_lamps.append(id)
+    for id in response_content:
+        lamps.append(id)
     
-    return color_lamps
+    return lamps
 
 def main():
     print("Collecting information about available lamps...")

@@ -50,7 +50,7 @@ def check_leader(sheet_id: str) -> str:
     else:   # We find the leader
         # Construct leaderboard by number of entries
         leaderboard = {}
-        for row in values:
+        for row in values[1:]: # Skip header row
             choice = row[0]
             if choice not in leaderboard:
                 leaderboard[choice] = 1

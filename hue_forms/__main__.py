@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-from hue_forms.options import OPTIONS
 import hue_forms.hue_forms as hf
 
 import argparse
@@ -14,6 +13,4 @@ def parse():
     if args.test_google_sheet:
         hf.test_google_sheet()
     else:
-        if not OPTIONS:
-            raise ValueError("No options set; please edit options.py")
         hf.main()
