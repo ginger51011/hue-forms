@@ -1,7 +1,7 @@
 # hue-forms
 A Python script to control Philips Hue via API through Google Sheets, preferable via Google Forms. Since it's very easy to link a Google Form with a Google Sheet, this is a neat way to let democracy decide your lighting. Or not. I hacked this together real fast like, so no promises that this is any good.
 
-After installation, run in command-line as `hue_forms`. You can test if your form is working by running `hue_forms --test-google-form`.
+After installation, run in command-line as `hue_forms`. You can test if your spreadsheet is working by running `hue_forms --test-google-sheet`.
 
 # Installation
 
