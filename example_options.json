@@ -1,0 +1,53 @@
+{
+    "Mysig ( ͡° ͜ʖ ͡°)": {
+        "body": {
+            "on": true,
+            "sat": 254,
+            "xy": [0.2633, 0.1344],
+            "effect": "none",
+            "transitiontime": 3
+        }
+    },
+    "Dank": {
+        "body": {        
+            "on": true,
+            "sat": 254,
+            "xy": [0.2325, 0.4329],
+            "effect": "none",
+            "transitiontime": 3
+        }
+    },
+    "Ginger Squad": {
+        "body": {
+            "on": true,
+            "sat": 254,
+            "xy": [0.5587, 0.4509],
+            "effect": "none",
+            "transitiontime": 3
+        }
+    },
+    "Blue Planet": {
+        "body": {        
+            "on": true,
+            "sat": 254,
+            "xy": [0.2657, 0.2890],
+            "effect": "none",
+            "transitiontime": 3
+        }
+    },
+    "Strömavbrott": {
+        "body": {
+            "on": false,
+            "effect": "none",
+            "transitiontime": 0
+        }
+    },
+    "Rave": {
+        "body": {
+            "on": true,
+            "effect": "colorloop",
+            "sat": 254,
+            "transitiontime": 3
+        }
+    }
+}
