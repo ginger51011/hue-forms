@@ -10,15 +10,14 @@ from google.auth.transport.requests import Request
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 TOKEN_PATH = path.join(path.expanduser("~"), "./.config/hue-forms/token.pickle")
 CREDENTIALS_PATH = path.join(path.expanduser("~"), "./.config/hue-forms/credentials.json")
+RANGE = "Class Data!B2" # B är färg, 1 är bara titlar så börjar från rad 2
 
 def check_leader(sheet_id, nbr_of_options):
     """
     Basically taken from google python quickstart,
     but edited
     """
-
     creds = None
-    range = f"Class Data!A{nbr_of_options}:B"
 
     if path.exists(TOKEN_PATH):
         if path.exists(TOKEN_PATH):
@@ -40,19 +39,30 @@ def check_leader(sheet_id, nbr_of_options):
 
     # Kallar API:n
     sheet = service.spreadsheets()
-    results = sheet.values().get(spreadsheetId=sheet_id, range=range).execute()
-    values = result.get('values', [])
+    results = sheet.values().get(spreadsheetId=sheet_id, range=RANGE).execute()
+    values = results.get('values', [])
+
+    leader = ""
 
     if not values:
         return
     else:   # We find the leader
-        leader = ""
-        leader_value = 0
+        # Construct leaderboard by number of entries
+        leaderboard = {}
         for row in values:
-            if row[1] > leader_value:
-                leader = row[0]
-                leader_value = row[1]
+            choice = row[0]
+            if not leaderboard[choice]:
+                leaderboard[choice] = 1
             else:
-                continue
+                leaderboard[choice] = leaderboard[choice] + 1
+        
+        # Finx max number of entries in leaderboard
+        leader_value = 0
+        for choice in leaderboard:
+            if leaderboard[choice] > leader_value:
+                leader = choice
+                leader_value = leaderboard[choice]
+            else:
+                continue  
     
     return leader

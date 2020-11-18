@@ -22,7 +22,6 @@ BASE_API_URL = f"http://{BRIDGE_IP}/api/{USERNAME}/"
 # For Google Spreadsheets
 SHEET_ID = CONFIG["sheets"]["sheet_id"]
 TIME_BETWEEN_UPDATES = float(CONFIG["sheets"]["time_between_updates"])
-NBR_OF_OPTIONS=int(CONFIG["sheets"]["nbr_of_options"])
 
 def update_lights(body, lamp_ids=[]):
     """
@@ -58,7 +57,7 @@ def main():
         raise ValueError("No valid lamps found!")
 
     while True:
-        new_leader = check_leader(sheet_id=SHEET_ID, nbr_of_options=NBR_OF_OPTIONS)
+        new_leader = check_leader(sheet_id=SHEET_ID)
 
         if new_leader != last_leader:
             update_lights(OPTIONS[new_leader]["body"], lamp_ids=lamp_ids)
