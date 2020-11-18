@@ -10,9 +10,9 @@ from google.auth.transport.requests import Request
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 TOKEN_PATH = path.join(path.expanduser("~"), "./.config/hue-forms/token.pickle")
 CREDENTIALS_PATH = path.join(path.expanduser("~"), "./.config/hue-forms/credentials.json")
-RANGE = "Class Data!B2:B{}" # B är färg, 1 är bara titlar så börjar från rad 2
+RANGE = "B:B" # B är färg, A är timestamp. This is whole row
 
-def check_leader(sheet_id, max_options=100):
+def check_leader(sheet_id):
     """
     Basically taken from google python quickstart,
     but edited
@@ -37,9 +37,6 @@ def check_leader(sheet_id, max_options=100):
 
     service = build("sheets", "v4", credentials=creds)
 
-    # Sets range
-    range = RANGE.format(max_options)
-
     # Kallar API:n
     sheet = service.spreadsheets()
     results = sheet.values().get(spreadsheetId=sheet_id, range=RANGE).execute()
@@ -53,11 +50,8 @@ def check_leader(sheet_id, max_options=100):
         # Construct leaderboard by number of entries
         leaderboard = {}
         for row in values:
-            # Have we started finding empty rows below max_options, we quit
             choice = row[0]
-            if not choice:
-                break
-            elif not leaderboard[choice]:
+            if choice not in leaderboard:
                 leaderboard[choice] = 1
             else:
                 leaderboard[choice] = leaderboard[choice] + 1
