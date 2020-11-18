@@ -9,7 +9,7 @@ ___Installation is a bit tedious and currently requires user to send 1 GET reque
 
 You need some command-line experience, a file of credentials from Google API and a username from your Philips Hue Bridge. The last one is done by sending a GET-request acording to [this](https://developers.meethue.com/develop/get-started-2/) guide.
 
-Make sure `config.ini.default` is saved as `~/.config/hue-forms/config.ini` and fill it out. You can find your sheet-id (
+Make sure `config.ini.default` is saved as `~/.config/hue-forms/config.ini` and fill it out. You can find your sheet-id in the URL of your Google Spreadsheet.
 
 Change `options.json.default` according to how you would like it, and move to `~./config/hue-forms/options.json`. You can use `example_options.json` for reference. Add your Google API credentials as `~/.config/hue-forms/credentials.json` (downloaded from google).
 
