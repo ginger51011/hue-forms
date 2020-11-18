@@ -2,8 +2,10 @@
 # Please read official documentation for help.
 [hue]
 username=
+bridge_ip=
 
 # Please read official documentation
 # to find this id
 [sheets]
 sheet_id=
+time_between_updates=
