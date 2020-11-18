@@ -5,9 +5,9 @@ import requests as req
 import configparser
 from os import path
 from time import sleep
+from json import load
 
 # Internal imports
-from hue_forms.options import OPTIONS
 import hue_forms.sheets_checker as sc
 
 # Defining constants from config
@@ -22,6 +22,10 @@ BASE_API_URL = f"http://{BRIDGE_IP}/api/{USERNAME}/"
 # For Google Spreadsheets
 SHEET_ID = CONFIG["sheets"]["sheet_id"]
 TIME_BETWEEN_UPDATES = float(CONFIG["sheets"]["time_between_updates"])
+
+# Loading in options
+with path.join(path.expanduser("~"), "./.config/hue-forms/options.json") as options:
+    OPTIONS = load(options)
 
 def update_lights(body, lamp_ids=[]):
     """
@@ -55,6 +59,8 @@ def main():
     
     if not lamp_ids:
         raise ValueError("No valid lamps found!")
+    if not OPTIONS:
+        raise ValueError("options.json not found in ~/.config/hue-forms/")
 
     while True:
         new_leader = sc.check_leader(sheet_id=SHEET_ID)

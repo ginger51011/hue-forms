@@ -5,7 +5,7 @@ A Python script to control Philips Hue via API through Google Sheets, preferable
 
 Make sure `config.ini.default` is saved as `~/.config/hue-forms/config.ini` and fill it out.
 
-Also change `hue_forms/options.py` according to how you would like it. Add your Google API credentials as `credentials.json` as `~/.config/hue-forms/credentials.json`.
+Change `options.json.default` according to how you would like it, and move to `~./config/hue-forms/options.json`. Add your Google API credentials as `~/.config/hue-forms/credentials.json`.
 
 # The form
 

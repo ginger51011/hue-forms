@@ -1,0 +1,12 @@
+// Please enter options available in sheet below.
+
+// An example is provided for green below
+
+// {
+//    "Green": {  # Name must match entry in Google Sheet
+//        "body": {     # What to send to hue api
+//            "on": true,
+//            "sat": 254,
+//        }
+//   }
+// }
