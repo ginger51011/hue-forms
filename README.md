@@ -3,7 +3,7 @@ A Python script to control Philips Hue via API through Google Sheets, preferable
 
 # Installation
 
-___Installation is a bit tedious and currently requires user to send 1 get request to get personal key__
+___Installation is a bit tedious and currently requires user to send 1 get request to get personal key___
 
 Make sure `config.ini.default` is saved as `~/.config/hue-forms/config.ini` and fill it out.
 
