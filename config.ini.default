@@ -7,6 +7,9 @@ bridge_ip=
 # Please read official documentation
 # to find this id
 # Time between updates may < 1!!!!
+# max_options must be larger than number of votable options in
+# form
 [sheets]
 sheet_id=
 time_between_updates=2
+max_options=100

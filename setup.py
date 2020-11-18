@@ -17,13 +17,12 @@ setup(
     packages=find_packages(),
     entry_points = {
         "console_scripts": [
-            "hue_forms = hue_forms.__main__:run"
+            "hue_forms = hue_forms.__main__:parse"
         ]
     },
     python_requires=">3.5.0",
     install_requires=[      # So that pip also installs required packages
         'requests',
-        'pickle'
         'google-api-python-client',
         'google-auth-httplib2',
         'google-auth-oauthlib'

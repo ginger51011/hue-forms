@@ -10,9 +10,9 @@ from google.auth.transport.requests import Request
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 TOKEN_PATH = path.join(path.expanduser("~"), "./.config/hue-forms/token.pickle")
 CREDENTIALS_PATH = path.join(path.expanduser("~"), "./.config/hue-forms/credentials.json")
-RANGE = "Class Data!B2" # B är färg, 1 är bara titlar så börjar från rad 2
+RANGE = "Class Data!B2:B{}" # B är färg, 1 är bara titlar så börjar från rad 2
 
-def check_leader(sheet_id, nbr_of_options):
+def check_leader(sheet_id, max_options=100):
     """
     Basically taken from google python quickstart,
     but edited
@@ -23,19 +23,22 @@ def check_leader(sheet_id, nbr_of_options):
         if path.exists(TOKEN_PATH):
             with open(TOKEN_PATH, 'rb') as token:
                 creds = pickle.load(token)
-        # If there are no (valid) credentials available, let the user log in.
-        if not creds or not creds.valid:
-            if creds and creds.expired and creds.refresh_token:
-                creds.refresh(Request())
-            else:
-                flow = InstalledAppFlow.from_client_secrets_file(
-                    CREDENTIALS_PATH, SCOPES)
-                creds = flow.run_local_server(port=0)
-            # Save the credentials for the next run
-            with open(TOKEN_PATH, 'wb') as token:
-                pickle.dump(creds, token)
-    
+    # If there are no (valid) credentials available, let the user log in.
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(
+                CREDENTIALS_PATH, SCOPES)
+            creds = flow.run_local_server(port=0)
+        # Save the credentials for the next run
+        with open(TOKEN_PATH, 'wb') as token:
+            pickle.dump(creds, token)
+
     service = build("sheets", "v4", credentials=creds)
+
+    # Sets range
+    range = RANGE.format(max_options)
 
     # Kallar API:n
     sheet = service.spreadsheets()
@@ -50,8 +53,11 @@ def check_leader(sheet_id, nbr_of_options):
         # Construct leaderboard by number of entries
         leaderboard = {}
         for row in values:
+            # Have we started finding empty rows below max_options, we quit
             choice = row[0]
-            if not leaderboard[choice]:
+            if not choice:
+                break
+            elif not leaderboard[choice]:
                 leaderboard[choice] = 1
             else:
                 leaderboard[choice] = leaderboard[choice] + 1
