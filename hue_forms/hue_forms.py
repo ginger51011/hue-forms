@@ -68,7 +68,7 @@ def main():
 
         if new_leader != last_leader:
             if new_leader not in OPTIONS:
-                raise ValueError(f"{new_leader} not in hue_forms/options.py! Cannot select this!")
+                raise ValueError(f"{new_leader} not in options.json! Cannot select this!")
             else:  
                 update_lights(OPTIONS[new_leader]["body"], lamp_ids=lamp_ids)
                 last_leader = new_leader
