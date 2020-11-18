@@ -6,6 +6,8 @@ bridge_ip=
 
 # Please read official documentation
 # to find this id
+# Time between updates may < 1!!!!
 [sheets]
 sheet_id=
-time_between_updates=
+time_between_updates=2
+token=
