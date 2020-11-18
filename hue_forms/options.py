@@ -14,3 +14,8 @@ OPTIONS = {
     }
 }
 """
+
+# Will result in error if empty
+OPTIONS = {
+
+}
