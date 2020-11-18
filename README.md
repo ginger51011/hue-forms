@@ -9,4 +9,4 @@ Also change `hue_forms/options.py` according to how you would like it. Add your 
 
 # The form
 
-This was created for a single-answer single-question Google Form, using sheets to check values.
+This was created for a single-answer single-question Google Form, using sheets to check values. Note that options MUST BE the same as defined in `options.py`!

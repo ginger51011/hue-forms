@@ -21,7 +21,7 @@ setup(
         ]
     },
     python_requires=">3.5.0",
-    install_requires=[      # So that pip also installs required packages
+    install_requires=[
         'requests',
         'google-api-python-client',
         'google-auth-httplib2',

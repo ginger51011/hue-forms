@@ -60,8 +60,11 @@ def main():
         new_leader = sc.check_leader(sheet_id=SHEET_ID)
 
         if new_leader != last_leader:
-            update_lights(OPTIONS[new_leader]["body"], lamp_ids=lamp_ids)
-            last_leader = new_leader
+            if new_leader not in OPTIONS:
+                raise ValueError(f"{new_leader} not in hue_forms/options.py! Cannot select this!")
+            else:  
+                update_lights(OPTIONS[new_leader]["body"], lamp_ids=lamp_ids)
+                last_leader = new_leader
         
         sleep(TIME_BETWEEN_UPDATES)
 

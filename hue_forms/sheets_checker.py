@@ -12,10 +12,11 @@ TOKEN_PATH = path.join(path.expanduser("~"), "./.config/hue-forms/token.pickle")
 CREDENTIALS_PATH = path.join(path.expanduser("~"), "./.config/hue-forms/credentials.json")
 RANGE = "B:B" # B är färg, A är timestamp. This is whole row
 
-def check_leader(sheet_id):
+def check_leader(sheet_id: str) -> str:
     """
-    Basically taken from google python quickstart,
-    but edited
+    Based on Google Quickstart
+
+    Checks for current leader in coloumn B, i.e. option with the most entries
     """
     creds = None
 
