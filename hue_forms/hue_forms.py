@@ -8,7 +8,7 @@ from time import sleep
 
 # Internal imports
 from hue_forms.options import OPTIONS
-from hue_forms.sheet_checker import check
+from hue_forms.sheets_checker import check_leader
 
 # Defining constants from config
 CONFIG = configparser.ConfigParser()
@@ -22,6 +22,7 @@ BASE_API_URL = f"http://{BRIDGE_IP}/api/{USERNAME}/"
 # For Google Spreadsheets
 SHEET_ID = CONFIG["sheets"]["sheet_id"]
 TIME_BETWEEN_UPDATES = float(CONFIG["sheets"]["time_between_updates"])
+NBR_OF_OPTIONS=int(CONFIG["sheets"]["nbr_of_options"])
 
 def update_lights(body, lamp_ids=[]):
     """
@@ -50,5 +51,17 @@ def get_all_color_lamps() -> list:
     return color_lamps
 
 def main():
+    last_leader = ""
+    lamp_ids = get_all_color_lamps()
+    
+    if not lamp_ids:
+        raise ValueError("No valid lamps found!")
+
     while True:
-        check_leader(sheet_id=SHEET_ID)
+        new_leader = check_leader(sheet_id=SHEET_ID, nbr_of_options=NBR_OF_OPTIONS)
+
+        if new_leader != last_leader:
+            update_lights(OPTIONS[new_leader]["body"], lamp_ids=lamp_ids)
+            last_leader = new_leader
+        
+        sleep(TIME_BETWEEN_UPDATES)

@@ -7,7 +7,7 @@ An example is provided for green below
 
 OPTIONS = {
     "Green": {  # Name must match entry in Google Sheet
-        body: {     # What to send to hue api
+        "body": {     # What to send to hue api
             "on": true,
             "sat": 254,
         }

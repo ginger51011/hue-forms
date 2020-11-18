@@ -11,14 +11,14 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 TOKEN_PATH = path.join(path.expanduser("~"), "./.config/hue-forms/token.pickle")
 CREDENTIALS_PATH = path.join(path.expanduser("~"), "./.config/hue-forms/credentials.json")
 
-
-def check_leader(sheet_id):
+def check_leader(sheet_id, nbr_of_options):
     """
     Basically taken from google python quickstart,
     but edited
     """
 
     creds = None
+    range = f"Class Data!A{nbr_of_options}:B"
 
     if path.exists(TOKEN_PATH):
         if path.exists(TOKEN_PATH):
@@ -40,10 +40,19 @@ def check_leader(sheet_id):
 
     # Kallar API:n
     sheet = service.spreadsheets()
-    results = sheet.values().get(spreadsheetId=sheet_id).execute()
+    results = sheet.values().get(spreadsheetId=sheet_id, range=range).execute()
     values = result.get('values', [])
 
     if not values:
         return
-    else:
-        
+    else:   # We find the leader
+        leader = ""
+        leader_value = 0
+        for row in values:
+            if row[1] > leader_value:
+                leader = row[0]
+                leader_value = row[1]
+            else:
+                continue
+    
+    return leader

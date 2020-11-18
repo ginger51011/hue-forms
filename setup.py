@@ -23,6 +23,7 @@ setup(
     python_requires=">3.5.0",
     install_requires=[      # So that pip also installs required packages
         'requests',
+        'pickle'
         'google-api-python-client',
         'google-auth-httplib2',
         'google-auth-oauthlib'
