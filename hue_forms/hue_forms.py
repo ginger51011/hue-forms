@@ -34,7 +34,7 @@ def update_lights(body, lamp_ids=[]):
     in a PUT.
     """
     for id in lamp_ids:
-        api_url = BASE_API_URL + id
+        api_url = BASE_API_URL + id +"/state"
         req.put(url=api_url, json=body)
 
 def get_all_color_lamps() -> list:
@@ -55,6 +55,7 @@ def get_all_color_lamps() -> list:
     return color_lamps
 
 def main():
+    print("Collecting information about available lamps...")
     last_leader = ""
     lamp_ids = get_all_color_lamps()
     
@@ -63,6 +64,7 @@ def main():
     if not OPTIONS:
         raise ValueError("options.json not found in ~/.config/hue-forms/")
 
+    print("Starting form-checking...")
     while True:
         new_leader = sc.check_leader(sheet_id=SHEET_ID)
 
@@ -72,6 +74,7 @@ def main():
             else:  
                 update_lights(OPTIONS[new_leader]["body"], lamp_ids=lamp_ids)
                 last_leader = new_leader
+                print(f"{new_leader} has taken the lead!")
         
         sleep(TIME_BETWEEN_UPDATES)
 

@@ -10,3 +10,7 @@ Change `options.json.default` according to how you would like it, and move to `~
 # The form
 
 This was created for a single-answer single-question Google Form, using sheets to check values. Note that options MUST BE the same as defined in `options.py`!
+
+# Finding colors
+
+To find your colors i XY-space, try DuckDuckGoing for __"CEI XY chart"__. Then you can choose the correct (x, y)-values. 
