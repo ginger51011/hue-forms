@@ -24,7 +24,8 @@ SHEET_ID = CONFIG["sheets"]["sheet_id"]
 TIME_BETWEEN_UPDATES = float(CONFIG["sheets"]["time_between_updates"])
 
 # Loading in options
-with path.join(path.expanduser("~"), "./.config/hue-forms/options.json") as options:
+OPTIONS_PATH = path.join(path.expanduser("~"), "./.config/hue-forms/options.json")
+with open(OPTIONS_PATH) as options:
     OPTIONS = load(options)
 
 def update_lights(body, lamp_ids=[]):
