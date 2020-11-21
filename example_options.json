@@ -5,7 +5,6 @@
             "sat": 254,
             "bri": 170,
             "xy": [0.7333, 0.3244],
-            "effect": "none",
             "transitiontime": 3
         }
     },
@@ -15,7 +14,6 @@
             "bri": 190,
             "sat": 254,
             "xy": [0.12, 0.8],
-            "effect": "none",
             "transitiontime": 3
         }
     },
@@ -24,25 +22,22 @@
             "on": true,
             "sat": 254,
             "bri": 210,
-            "xy": [0.65, 0.4],
-            "effect": "none",
+            "xy": [0.65, 0.4],      
             "transitiontime": 3
         }
     },
     "Blue Planet": {
-        "body": {        
+        "body": {  
             "on": true,
             "sat": 254,
             "bri": 210,
             "xy": [0.12, 0.0051],
-            "effect": "none",
             "transitiontime": 3
         }
     },
     "Strömavbrott": {
         "body": {
             "on": false,
-            "effect": "none",
             "transitiontime": 0
         }
     },
