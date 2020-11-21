@@ -25,8 +25,21 @@ TIME_BETWEEN_UPDATES = float(CONFIG["sheets"]["time_between_updates"])
 
 # Loading in options
 OPTIONS_PATH = path.join(path.expanduser("~"), "./.config/hue-forms/options.json")
+
+"""
+An ugly fix; If you are going from "effect": "colorloop" to "effect: "none";
+this will be parsed by the API last and set lamp to last known state, i.e. not
+the specified color.
+"""
+OPTIONS_CONTAINS_SPECIAL_EFFECTS = False
+
 with open(OPTIONS_PATH) as options:
     OPTIONS = load(options)
+    for key in OPTIONS:
+        if "effect" in OPTIONS[key]["body"]:
+            if OPTIONS[key]["body"]["effect"] != "none":
+                OPTIONS_CONTAINS_SPECIAL_EFFECTS = True
+                break  # Only need to find one
 
 def update_lights(body, lamp_ids=[]):
     """
@@ -35,6 +48,10 @@ def update_lights(body, lamp_ids=[]):
     """
     for id in lamp_ids:
         api_url = f"{BASE_API_URL}{id}/state"
+        
+        if OPTIONS_CONTAINS_SPECIAL_EFFECTS:
+            req.put(url=api_url, json={"effect": "none"})
+        
         req.put(url=api_url, json=body)
 
 def get_all_color_lamps() -> list:
@@ -68,7 +85,13 @@ def main():
 
         if new_leader != last_leader:
             if new_leader not in OPTIONS:
-                raise ValueError(f"{new_leader} not in options.json! Cannot select this!")
+                if new_leader == "": 
+                    # If script is running and we remove cells, the
+                    # script will break. This is not desireable, 
+                    # so we continue looping instead
+                    continue
+                else:
+                    raise ValueError("{new_leader} not in options.json! Cannot select this!")
             else:  
                 update_lights(OPTIONS[new_leader]["body"], lamp_ids=lamp_ids)
                 last_leader = new_leader
