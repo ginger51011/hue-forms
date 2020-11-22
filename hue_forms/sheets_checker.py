@@ -16,16 +16,14 @@ RANGE = "B:B" # B är färg, A är timestamp. This is whole row
 creds = None
 
 if path.exists(TOKEN_PATH):
-    if path.exists(TOKEN_PATH):
-        with open(TOKEN_PATH, 'rb') as token:
-            creds = pickle.load(token)
+    with open(TOKEN_PATH, 'rb') as token:
+        creds = pickle.load(token)
 # If there are no (valid) credentials available, let the user log in.
 if not creds or not creds.valid:
     if creds and creds.expired and creds.refresh_token:
         creds.refresh(Request())
     else:
-        flow = InstalledAppFlow.from_client_secrets_file(
-            CREDENTIALS_PATH, SCOPES)
+        flow = InstalledAppFlow.from_client_secrets_file(CREDENTIALS_PATH, SCOPES)
         creds = flow.run_local_server(port=0)
     # Save the credentials for the next run
     with open(TOKEN_PATH, 'wb') as token:
@@ -33,8 +31,6 @@ if not creds or not creds.valid:
 
 def check_leader(sheet_id: str) -> str:
     """
-    Based on Google Quickstart
-
     Checks for current leader in coloumn B, i.e. option with the most entries
     """
     service = build("sheets", "v4", credentials=creds)
