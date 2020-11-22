@@ -33,6 +33,17 @@ def check_leader(sheet_id: str) -> str:
     """
     Checks for current leader in coloumn B, i.e. option with the most entries
     """
+
+    # Makes sure creds are not expired, and if they are, refresh them
+    if creds.expired:
+        print("Credentials expired; attempting to refresh...")
+        if creds.refresh_token:
+            creds.refresh(Request())
+            print("Success!")
+        else:
+            raise EnvironmentError("Could not refresh credentials!")
+
+
     service = build("sheets", "v4", credentials=creds)
 
     # Kallar API:n
