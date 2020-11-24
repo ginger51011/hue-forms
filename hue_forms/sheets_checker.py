@@ -29,7 +29,7 @@ if not creds or not creds.valid:
     with open(TOKEN_PATH, 'wb') as token:
         pickle.dump(creds, token)
 
-def check_leader(sheet_id: str) -> str, bool:
+def check_leader(sheet_id: str) -> (str, bool):
     """
     Checks for current leader in coloumn B, i.e. option with the most entries.
 
@@ -50,7 +50,7 @@ def check_leader(sheet_id: str) -> str, bool:
 
     # Kallar API:n
     sheet = service.spreadsheets()
-    
+
     try:
         results = sheet.values().get(spreadsheetId=sheet_id, range=RANGE).execute()
     except Exception as e:
