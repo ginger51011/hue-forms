@@ -81,9 +81,9 @@ def main():
 
     print("Starting form-checking...")
     while True:
-        new_leader = sc.check_leader(sheet_id=SHEET_ID)
+        new_leader, success = sc.check_leader(sheet_id=SHEET_ID)
 
-        if new_leader != last_leader:
+        if new_leader != last_leader and success:
             if new_leader not in OPTIONS:
                 if new_leader == "": 
                     # If script is running and we remove cells, the

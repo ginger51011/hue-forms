@@ -29,9 +29,11 @@ if not creds or not creds.valid:
     with open(TOKEN_PATH, 'wb') as token:
         pickle.dump(creds, token)
 
-def check_leader(sheet_id: str) -> str:
+def check_leader(sheet_id: str) -> str, bool:
     """
-    Checks for current leader in coloumn B, i.e. option with the most entries
+    Checks for current leader in coloumn B, i.e. option with the most entries.
+
+    Returns true if success
     """
 
     # Makes sure creds are not expired, and if they are, refresh them
@@ -48,7 +50,12 @@ def check_leader(sheet_id: str) -> str:
 
     # Kallar API:n
     sheet = service.spreadsheets()
-    results = sheet.values().get(spreadsheetId=sheet_id, range=RANGE).execute()
+    
+    try:
+        results = sheet.values().get(spreadsheetId=sheet_id, range=RANGE).execute()
+    except Exception as e:
+        return "", False
+
     values = results.get('values', [])
 
     leader = ""
