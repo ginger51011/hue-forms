@@ -84,4 +84,4 @@ def check_leader(sheet_id: str) -> (str, bool):
             else:
                 continue  
     
-    return leader
+    return leader, True
